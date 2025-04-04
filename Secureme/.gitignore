@@ -528,3 +528,6 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sw?
+
+# Environment files
+*.env
