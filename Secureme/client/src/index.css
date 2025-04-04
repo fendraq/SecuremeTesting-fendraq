@@ -1,0 +1,15 @@
+#root {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+main{
+  max-width: 70%;
+  /* margin: 0 auto; */
+  margin-left: 16rem;
+
+  text-align: center;
+}
+*{
+  font-size: 1.4rem;
+}
