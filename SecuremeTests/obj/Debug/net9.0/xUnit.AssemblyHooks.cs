@@ -3,26 +3,26 @@
 
 using System.CodeDom.Compiler;
 using global::System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 [assembly: global::Xunit.TestFramework("TechTalk.SpecFlow.xUnit.SpecFlowPlugin.XunitTestFrameworkWithAssemblyFixture", "TechTalk.SpecFlow.xUnit.SpecFlowPlugin")]
 [assembly: global::TechTalk.SpecFlow.xUnit.SpecFlowPlugin.AssemblyFixture(typeof(global::SecuremeTests_XUnitAssemblyFixture))]
 
-[GeneratedCode("SpecFlow", "4.0.31-beta")]
-public class SecuremeTests_XUnitAssemblyFixture : global::Xunit.IAsyncLifetime
+[GeneratedCode("SpecFlow", "3.9.74")]
+public class SecuremeTests_XUnitAssemblyFixture : global::System.IDisposable
 {
+    private readonly global::System.Reflection.Assembly _currentAssembly;
+
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public async Task InitializeAsync()
+    public SecuremeTests_XUnitAssemblyFixture()
     {
-        var currentAssembly = typeof(SecuremeTests_XUnitAssemblyFixture).Assembly;
-        await global::TechTalk.SpecFlow.TestRunnerManager.OnTestRunStartAsync(currentAssembly);
+        _currentAssembly = typeof(SecuremeTests_XUnitAssemblyFixture).Assembly;
+        global::TechTalk.SpecFlow.TestRunnerManager.OnTestRunStart(_currentAssembly);
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public async Task DisposeAsync()
+    public void Dispose()
     {
-        var currentAssembly = typeof(SecuremeTests_XUnitAssemblyFixture).Assembly;
-        await global::TechTalk.SpecFlow.TestRunnerManager.OnTestRunEndAsync(currentAssembly);
+        global::TechTalk.SpecFlow.TestRunnerManager.OnTestRunEnd(_currentAssembly);
     }
 }
 
