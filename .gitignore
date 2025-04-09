@@ -531,3 +531,46 @@ dist-ssr
 
 # Environment files
 *.env
+
+# Output
+**/bin/
+**/obj/
+
+# SpecFlow generated
+*.feature.cs
+
+# Playwright
+**/.playwright/
+playwright-report/
+test-results/
+
+# NuGet + MSBuild artifacts
+*.dll
+*.pdb
+*.cache
+*.deps.json
+*.runtimeconfig.json
+*.csproj.FileListAbsolute.txt
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.sourcelink.json
+*.CoreCompileInputs.cache
+
+# Language resource folders
+**/cs/
+**/de/
+**/es/
+**/fr/
+**/it/
+**/ja/
+**/ko/
+**/pl/
+**/pt-BR/
+**/ru/
+**/tr/
+**/zh-Hans/
+**/zh-Hant/
+
+# Rider/IDE
+.idea/
+

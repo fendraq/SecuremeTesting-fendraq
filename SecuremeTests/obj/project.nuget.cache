@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LYzDOl43UIo=",
+  "dgSpecHash": "Tb5zzLdBl6I=",
   "success": true,
   "projectFilePath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\svens\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\svens\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",
     "C:\\Users\\svens\\.nuget\\packages\\dotnetenv\\2.2.0\\dotnetenv.2.2.0.nupkg.sha512",
+    "C:\\Users\\svens\\.nuget\\packages\\fluentassertions\\8.2.0\\fluentassertions.8.2.0.nupkg.sha512",
     "C:\\Users\\svens\\.nuget\\packages\\gherkin\\19.0.3\\gherkin.19.0.3.nupkg.sha512",
     "C:\\Users\\svens\\.nuget\\packages\\mailkit\\4.11.0\\mailkit.4.11.0.nupkg.sha512",
     "C:\\Users\\svens\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
