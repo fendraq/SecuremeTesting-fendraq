@@ -33,7 +33,7 @@ public class TestNewCustomerCase
     await _browser.CloseAsync();
   }
 
-
+  // Scenario: Adding a new customer case with valid data
   [Given(@"I am on the Webshop page")]
   public async Task GivenIAmOnTheWebshopPage()
   {
@@ -55,59 +55,72 @@ public class TestNewCustomerCase
   [When(@"I choose Shipping category")]
   public async Task WhenIChooseShippingCategory()
   {
-    await _page.GetByText("Category").ClickAsync();
-    await _page.GetByText("Shipping").ClickAsync();
+    await _page.Locator("div[role='combobox']").ClickAsync();
+    await _page.GetByRole(AriaRole.Option, new() { Name = "shipping" }).ClickAsync();
   }
-  // alternativ: 
-  // 1. Click the dropdown to expand it
-  //await _page.Locator("div[role='combobox']").ClickAsync();
-
-// 2. Click the item inside the dropdown menu
-  // await _page.GetByRole(AriaRole.Option, new() { Name = "Shipping" }).ClickAsync();
-
 
   [When(@"I type ""(.*)"" in the E-postadress field")]
   public async Task WhenITypeInTheEPostadressField(string p0)
   {
-    await _page.FillAsync("input[name='E-postadress']", p0);
+    await _page.FillAsync("input[name='customer_email']", p0);
   }
 
   [When(@"I type ""(.*)"" in the Förnamn field")]
   public async Task WhenITypeInTheFornamnField(string peter)
   {
-    await _page.FillAsync("input[name='Förnamn']", peter);
+    await _page.FillAsync("input[name='customer_first_name']", peter);
   }
 
   [When(@"I type ""(.*)"" in the Efternamn field")]
   public async Task WhenITypeInTheEfternamnField(string svensson)
   {
-    await _page.FillAsync("input[name='Efternamn']", svensson);
+    await _page.FillAsync("input[name='customer_last_name']", svensson);
   }
 
   [When(@"I type ""(.*)"" in the Rubrik field")]
   public async Task WhenITypeInTheRubrikField(string leveransproblem)
   {
-    await _page.FillAsync("input[name='Rubrik']", leveransproblem);
+    await _page.FillAsync("input[name='title']", leveransproblem);
   }
 
   [When(@"I type ""(.*)"" in Beskriv ditt ärende field")]
   public async Task WhenITypeInBeskrivDittArendeField(string p0)
   {
-    await _page.FillAsync("input[text=Beskriv]", p0);
+    await _page.FillAsync("textarea[name='case_message']", p0);
   }
 
   [When(@"I click on the Send button")]
   public async Task WhenIClickOnTheSendButton()
   {
-    await _page.ClickAsync("[name='Send']");
+    await _page.GetByText("Send").ClickAsync();
   }
-
+// https://playwright.dev/docs/dialogs
   [Then(@"I will get an alert saying ""(.*)""")]
-  public async Task ThenIWillGetAnAlertSaying(string p0)
+  public async Task ThenIWillGetAnAlertSaying(string expectedMessage)
   {
     _page.Dialog += async (_, dialog) =>
     {
-      Console.WriteLine($"Alert text: {dialog.Message}");
+      var dialogMessage = dialog.Message;
+      Assert.Equal(expectedMessage, dialogMessage);
+      await dialog.AcceptAsync();
+    };
+  }
+  
+  // Scenario: Filling a new customer case with wrong email format
+
+  [When(@"I type an invalid email ""(.*)"" in the E-postadress field")]
+  public async Task WhenITypeAnInvalidEmailInTheEPostadressField(string p0)
+  {
+    await _page.FillAsync("input[name='customer_email']", p0);
+  }
+// https://playwright.dev/docs/dialogs
+  [Then(@"I will get an alert error saying ""(.*)""")]
+  public async Task ThenIWillGetAnAlertSayingEmailIsInTheWrongFormat(string expectedMessage)
+  {
+    _page.Dialog += async (_, dialog) =>
+    {
+      var dialogMessage = dialog.Message;
+      Assert.Equal(expectedMessage, dialogMessage);
       await dialog.AcceptAsync();
     };
   }
