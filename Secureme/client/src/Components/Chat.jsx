@@ -217,7 +217,7 @@ export default function Chat( {customerChat, userCases, selectedCase, chatToken}
   
   return (
     <>
-      <h1>Chatt</h1>
+      <h1>Chat</h1>
       <Container  maxWidth="md" sx={{ mt: 4 }}>
         <ChatContainer>
           <ChatHeader>
@@ -233,10 +233,11 @@ export default function Chat( {customerChat, userCases, selectedCase, chatToken}
                 <StyledAvatar />
                 {/*Add avatar details*/}
                 <MessageContent isUser={message.is_sender_customer}>
-                  <Typography variant="body1" type="div">
+                  <Typography className="chat-message" variant="body1" type="div">
                     {message.text}
                   </Typography>
                   <Typography 
+                    className="chat-message-timestamp"
                     variant="caption"
                     sx={{ opacity: 0.7, mt: 0.5, display: "block"}}
                   >
@@ -249,6 +250,7 @@ export default function Chat( {customerChat, userCases, selectedCase, chatToken}
           <InputContainer>
             <Stack direction="row" spacing={2}>
               <TextField 
+                className="input-message"
                 inputRef={inputRef}
                 fullWidth
                 multiline

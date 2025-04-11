@@ -442,6 +442,33 @@
           "buildTransitive/Microsoft.Playwright.targets": {}
         }
       },
+      "Microsoft.Playwright.TestAdapter/1.51.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Playwright": "1.51.0",
+          "Microsoft.TestPlatform.ObjectModel": "17.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Playwright.TestAdapter.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Playwright.TestAdapter.dll": {}
+        }
+      },
+      "Microsoft.Playwright.Xunit/1.51.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Playwright": "1.51.0",
+          "Microsoft.Playwright.TestAdapter": "1.51.0",
+          "xunit.extensibility.core": "2.8.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Playwright.Xunit.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Playwright.Xunit.dll": {}
+        }
+      },
       "Microsoft.TestPlatform.ObjectModel/17.12.0": {
         "type": "package",
         "dependencies": {
@@ -3632,6 +3659,32 @@
         "lib/netstandard2.0/Microsoft.Playwright.xml",
         "microsoft.playwright.1.51.0.nupkg.sha512",
         "microsoft.playwright.nuspec"
+      ]
+    },
+    "Microsoft.Playwright.TestAdapter/1.51.0": {
+      "sha512": "mIMT46Sbg5gIxBD8NB8crmpAQK5YfgjEv7QrV29CdQV94T224s5GEx64V8n/Q6im6RoMod0Jlo5/0S9yXoN9nA==",
+      "type": "package",
+      "path": "microsoft.playwright.testadapter/1.51.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/netstandard2.0/Microsoft.Playwright.TestAdapter.dll",
+        "microsoft.playwright.testadapter.1.51.0.nupkg.sha512",
+        "microsoft.playwright.testadapter.nuspec"
+      ]
+    },
+    "Microsoft.Playwright.Xunit/1.51.0": {
+      "sha512": "Z37CeTYjZKlOgfHFYCSYZeOguRo67PC4weipJw373rPvUALDyjnHLDefLwXhq2nAV4HOoyO1ubZpUsQM8hxFqA==",
+      "type": "package",
+      "path": "microsoft.playwright.xunit/1.51.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/netstandard2.0/Microsoft.Playwright.Xunit.dll",
+        "microsoft.playwright.xunit.1.51.0.nupkg.sha512",
+        "microsoft.playwright.xunit.nuspec"
       ]
     },
     "Microsoft.TestPlatform.ObjectModel/17.12.0": {
@@ -8208,6 +8261,7 @@
       "FluentAssertions >= 8.2.0",
       "Microsoft.NET.Test.Sdk >= 17.12.0",
       "Microsoft.Playwright >= 1.51.0",
+      "Microsoft.Playwright.Xunit >= 1.51.0",
       "SpecFlow >= 3.9.74",
       "SpecFlow.Tools.MsBuild.Generation >= 3.9.74",
       "SpecFlow.xUnit >= 3.9.74",
@@ -8280,6 +8334,10 @@
             "version": "[17.12.0, )"
           },
           "Microsoft.Playwright": {
+            "target": "Package",
+            "version": "[1.51.0, )"
+          },
+          "Microsoft.Playwright.Xunit": {
             "target": "Package",
             "version": "[1.51.0, )"
           },

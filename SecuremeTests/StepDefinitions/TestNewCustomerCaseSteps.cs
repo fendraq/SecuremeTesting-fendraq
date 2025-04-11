@@ -83,27 +83,29 @@ public class TestNewCustomerCase
     await _page.FillAsync("input[name='title']", leveransproblem);
   }
 
-  [When(@"I type ""(.*)"" in Beskriv ditt ärende field")]
+  [When(@"I type ""(.*)"" in Beskriv ditt ärende field and click send")]
   public async Task WhenITypeInBeskrivDittArendeField(string p0)
   {
     await _page.FillAsync("textarea[name='case_message']", p0);
   }
-
-  [When(@"I click on the Send button")]
-  public async Task WhenIClickOnTheSendButton()
-  {
-    await _page.GetByText("Send").ClickAsync();
-  }
+  
 // https://playwright.dev/docs/dialogs
   [Then(@"I will get an alert saying ""(.*)""")]
   public async Task ThenIWillGetAnAlertSaying(string expectedMessage)
   {
+    var tcs = new TaskCompletionSource<string>();
+    
     _page.Dialog += async (_, dialog) =>
     {
-      var dialogMessage = dialog.Message;
-      Assert.Equal(expectedMessage, dialogMessage);
       await dialog.AcceptAsync();
+      tcs.SetResult(dialog.Message);
     };
+    
+    await _page.GetByText("Send").ClickAsync();
+
+    var dialogMessage = await tcs.Task;
+    
+    Assert.Equal(expectedMessage, dialogMessage);
   }
   
   // Scenario: Filling a new customer case with wrong email format
@@ -117,11 +119,36 @@ public class TestNewCustomerCase
   [Then(@"I will get an alert error saying ""(.*)""")]
   public async Task ThenIWillGetAnAlertSayingEmailIsInTheWrongFormat(string expectedMessage)
   {
+    var tcs = new TaskCompletionSource<string>();
+    
     _page.Dialog += async (_, dialog) =>
     {
-      var dialogMessage = dialog.Message;
-      Assert.Equal(expectedMessage, dialogMessage);
       await dialog.AcceptAsync();
+      tcs.SetResult(dialog.Message);
     };
+    
+    await _page.GetByText("Send").ClickAsync();
+
+    var dialogMessage = await tcs.Task;
+    
+    Assert.Equal(expectedMessage, dialogMessage);
+  }
+
+  [Then(@"I will se an alert error saying ""(.*)""")]
+  public async Task ThenIWillSeAnAlertErrorSaying(string expectedMessage)
+  {
+    var tcs = new TaskCompletionSource<string>();
+    
+    _page.Dialog += async (_, dialog) =>
+    {
+      await dialog.AcceptAsync();
+      tcs.SetResult(dialog.Message);
+    };
+    
+    await _page.GetByText("Send").ClickAsync();
+
+    var dialogMessage = await tcs.Task;
+    
+    Assert.Equal(expectedMessage, dialogMessage);
   }
 }
