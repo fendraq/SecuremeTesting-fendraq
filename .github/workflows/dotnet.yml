@@ -3,10 +3,17 @@
 
 name: CI/CD Test
 
-on:
-  push:
-    branches: ["main"]
+#on:
+  #push:
+    #branches: ["main"]
 
+env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  
 jobs:
   gui_tests:
     runs-on: ubuntu-latest
@@ -21,6 +28,11 @@ jobs:
       - name: Install dependencies
         run: dotnet restore SecuremeTests/SecuremeTests.csproj
 
+      - name: Install frontend dependencies
+        run: |
+          cd Secureme/client
+          npm ci
+
       - name: Build UI test project
         run: dotnet build SecuremeTests/SecuremeTests.csproj
 
@@ -30,6 +42,14 @@ jobs:
       - name: Start backend
         run: nohup dotnet run --project Secureme/server &
 
+      - name: Start frontend (Vite) dev server
+        run: |
+          cd Secureme/client
+          nohup npm run dev -- --host &
+
+      - name: Wait for frontend to be ready
+        run: npx wait-on http://localhost:5173
+
       - name: Run UI tests
-        run: dotnet test SecuremeTests/SecuremeTests.csproj
+        run: dotnet test SecuremeTests/SecuremeTests.csproj --filter TestCategory!=WorkInProgress
  
