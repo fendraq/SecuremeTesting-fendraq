@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SecuremeTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e8310821862c01ddb9e7ebf500564b9cd1b96537")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86e24ba62b9c4ecf6e3ad6efd0e29f1e6f9a8362")]
 [assembly: System.Reflection.AssemblyProductAttribute("SecuremeTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SecuremeTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

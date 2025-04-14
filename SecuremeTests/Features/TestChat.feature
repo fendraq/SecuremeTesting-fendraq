@@ -15,8 +15,22 @@ Feature: Test Chat
         And refresh the page
         Then I will see the message with a timestamp in the chat window
 
-    Scenario: Customer support can view the same chat
+    Scenario: TC-032 Customer support can view the same chat
+        Given I am on the My Cases view
+        And I see the list with my cases
+        When I click on the case with id "40"
+        Then I will se the same chat as the customer "Peter" sent
 
-    Scenario: Customer and customer support can send messages to each other
+    Scenario: TC-033 Customer and customer support can send messages to each other
+        Given the customer have a open chat
+        And the customer service have a open chat
+        When the customer sends a message
+        And the customer support refreshes the page
+        And the customer support see a message from the customer
+        And sends a reply message
+        Then the customer will see the new message
 
-    Scenario: Customer support can close the case and the chat
+    Scenario: TC-034 Customer support can close the case and the chat
+        Given the customer support is on the same chat
+        When the customer support clicks on close case
+        Then the case will change status in the My Cases list

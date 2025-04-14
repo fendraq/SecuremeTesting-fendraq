@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\SecuremeTests.csproj": {}
+    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj": {}
   },
   "projects": {
-    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\SecuremeTests.csproj": {
+    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\SecuremeTests.csproj",
+        "projectUniqueName": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj",
         "projectName": "SecuremeTests",
-        "projectPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\SecuremeTests.csproj",
+        "projectPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj",
         "packagesPath": "C:\\Users\\svens\\.nuget\\packages\\",
-        "outputPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\obj\\",
+        "outputPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
