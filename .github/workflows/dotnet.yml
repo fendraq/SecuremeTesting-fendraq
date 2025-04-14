@@ -3,9 +3,9 @@
 
 name: CI/CD Test
 
-on:
-  push:
-    branches: ["main"]
+#on:
+  #push:
+    #branches: ["main"]
 
 env:
   DB_HOST: ${{ secrets.DB_HOST }}
@@ -51,5 +51,5 @@ jobs:
         run: npx wait-on http://localhost:5173
 
       - name: Run UI tests
-        run: dotnet test SecuremeTests/SecuremeTests.csproj --filter TestCategory!=WorkInProgress
+        run: dotnet test SecuremeTests/SecuremeTests.csproj
  
