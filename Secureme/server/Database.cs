@@ -16,11 +16,11 @@ public class Database
     public Database()
     {
         // Read environment variables loaded by Env.Load(...)
-        _host = "217.76.56.135";
-        _port = "5434";
-        _user = "postgres";
-        _password = "CarefulDriverJumps46";
-        _database = "postgres";
+        _host = Environment.GetEnvironmentVariable("DB_HOST");
+        _port = Environment.GetEnvironmentVariable("DB_PORT");
+        _user = Environment.GetEnvironmentVariable("DB_USER");
+        _password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+        _database = Environment.GetEnvironmentVariable("DB_NAME");
 
         // Build the PostgreSQL connection string
         _connectionString = 
