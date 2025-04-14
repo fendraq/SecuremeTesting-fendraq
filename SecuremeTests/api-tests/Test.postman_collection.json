@@ -202,7 +202,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"case_id\": \"26\",\r\n    \"text\": \"Meddelande 1 från kundsupport\",\r\n    \"is_sender_customer\": false\r\n}",
+							"raw": "{\r\n    \"case_id\": \"20\",\r\n    \"text\": \"Meddelande 1 från kundsupport\",\r\n    \"is_sender_customer\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -587,22 +587,22 @@
 	"variable": [
 		{
 			"key": "host",
-			"value": "",
+			"value": "http://localhost:3000",
 			"type": "string"
 		},
 		{
 			"key": "chatToken",
-			"value": "",
+			"value": "bde82acc-b019-4e13-9e8c-52f26e8489e2",
 			"type": "string"
 		},
 		{
 			"key": "id",
-			"value": "",
+			"value": "20",
 			"type": "string"
 		},
 		{
 			"key": "userId",
-			"value": "",
+			"value": "8",
 			"type": "string"
 		}
 	]
