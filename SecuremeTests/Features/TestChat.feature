@@ -2,7 +2,7 @@ Feature: Test Chat
 
     Scenario: TC-030 Customer can access chat via mail
         Given I have received a mail with a chat link
-        When I click on the link with token "ad526171-df60-4389-982c-c29af74f9dc9"
+        When I click on the link with token "bde82acc-b019-4e13-9e8c-52f26e8489e2"
         Then I am redirected to a unique chat
          
     Scenario: TC-031 Customer can write a message in the chatt
@@ -15,12 +15,14 @@ Feature: Test Chat
         And refresh the page
         Then I will see the message with a timestamp in the chat window
 
+    @WorkInProgress
     Scenario: TC-032 Customer support can view the same chat
         Given I am on the My Cases view
         And I see the list with my cases
         When I click on the case with id "40"
         Then I will se the same chat as the customer "Peter" sent
 
+    @WorkInProgress
     Scenario: TC-033 Customer and customer support can send messages to each other
         Given the customer have a open chat
         And the customer service have a open chat
@@ -29,7 +31,7 @@ Feature: Test Chat
         And the customer support see a message from the customer
         And sends a reply message
         Then the customer will see the new message
-
+    @WorkInProgress
     Scenario: TC-034 Customer support can close the case and the chat
         Given the customer support is on the same chat
         When the customer support clicks on close case

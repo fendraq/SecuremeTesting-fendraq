@@ -74,8 +74,8 @@ public class TestChatSteps
   public async Task WhenRefreshThePage()
   {
     await _page.GotoAsync("http://localhost:5173/chat-page/ad526171-df60-4389-982c-c29af74f9dc9");
-  }
-
+  } 
+  
   [Then(@"I will see the message with a timestamp in the chat window")]
   public async Task ThenIWillSeeTheMessageWithATimestampInTheChatWindow()
   {

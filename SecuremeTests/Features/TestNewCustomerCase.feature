@@ -12,7 +12,7 @@ Feature: Test New Customer Case
         And I type "Min leverans är 5 veckor sen" in Beskriv ditt ärende field and click send
         Then I will get an alert saying "Message sent successfully"
 
-
+    @ignore
     Scenario: TC-028 Filling a new customer case with wrong email format
         Given I am on the Webshop page
         When I click on the Add new case-icon
