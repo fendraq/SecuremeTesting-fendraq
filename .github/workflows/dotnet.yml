@@ -30,7 +30,7 @@ jobs:
 
       - name: Install frontend dependencies
         run: |
-          cd client
+          cd secureme/client
           npm ci
 
       - name: Build UI test project
