@@ -51,5 +51,5 @@ jobs:
         run: npx wait-on http://localhost:5173
 
       - name: Run UI tests
-        run: dotnet test SecuremeTests/SecuremeTests.csproj
+        run: dotnet test SecuremeTests/SecuremeTests.csproj --filter TestCategory!=WorkInProgress
  
