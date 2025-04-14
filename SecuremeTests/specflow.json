@@ -1,5 +1,5 @@
 {
   "runtime": {
-    "ignoreTags": "@WorkInProgress"
+    "ignoreTags": "@WorkInProgress, @ignore"
   }
 }
