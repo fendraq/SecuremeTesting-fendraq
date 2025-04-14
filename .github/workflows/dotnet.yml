@@ -3,9 +3,9 @@
 
 name: CI/CD Test
 
-on:
-  push:
-    branches: ["main"]
+#on:
+  #push:
+    #branches: ["main"]
 
 env:
   DB_HOST: ${{ secrets.DB_HOST }}
