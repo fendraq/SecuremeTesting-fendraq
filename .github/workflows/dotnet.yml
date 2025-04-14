@@ -30,7 +30,7 @@ jobs:
 
       - name: Install frontend dependencies
         run: |
-          cd secureme/client
+          cd Secureme/client
           npm ci
 
       - name: Build UI test project
@@ -44,7 +44,7 @@ jobs:
 
       - name: Start frontend (Vite) dev server
         run: |
-          cd client
+          cd Secureme/client
           nohup npm run dev -- --host &
 
       - name: Wait for frontend to be ready
