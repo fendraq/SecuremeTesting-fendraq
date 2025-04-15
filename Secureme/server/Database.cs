@@ -3,6 +3,7 @@
 using Npgsql;
 using DotNetEnv;
 using System;
+using System.Threading.Tasks;
 
 public class Database
 {
@@ -35,15 +36,34 @@ public class Database
 
     public void TestConnection()
     {
+        Console.WriteLine("Starting database connection test...");
+        Console.WriteLine($"Attempting to connect to: Host={_host}, Port={_port}, Database={_database}, User={_user}");
+        
         using var connection = GetConnection();
         try
         {
-            connection.Open();
-            Console.WriteLine("Database Connection success");
+            var timeout = TimeSpan.FromSeconds(10);
+            var connectTask = Task.Run(() => connection.Open());
+            
+            if (Task.WaitAny(new[] { connectTask }, timeout) == -1)
+            {
+                throw new TimeoutException($"Database connection timed out after {timeout.TotalSeconds} seconds");
+            }
+
+            // Test the connection with a simple query
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = "SELECT 1";
+            cmd.ExecuteScalar();
+
+            Console.WriteLine("Database connection test successful!");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Database connection failed: {ex.Message}");
+            Console.WriteLine($"Database connection error: {ex.GetType().Name} - {ex.Message}");
+            Console.WriteLine($"Connection string (without password): Host={_host};Port={_port};Username={_user};Database={_database}");
+            
+            // In CI environment, we want to fail fast
+            throw new Exception("Database connection test failed. See above logs for details.", ex);
         }
     }
 }

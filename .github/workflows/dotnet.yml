@@ -44,14 +44,37 @@ jobs:
       - name: Start .NET backend
         run: |
           echo "Starting backend..."
-          cd Secureme/server && dotnet run --project > backend.log 2>&1 &
-          sleep 5
-          echo "=== Backend log ==="
-          cat backend.log || echo "backend.log not found"
-          echo "=== Ports Listening ==="
+          cd Secureme/server
+          # Run with direct output instead of background
+          dotnet run --project --no-build &
+          
+          # Store the PID
+          echo $! > ../backend.pid
+          
+          # Wait for the server to be ready
+          for i in {1..30}; do
+            if curl -s http://0.0.0.0:3000/api > /dev/null; then
+              echo "Backend started successfully"
+              break
+            fi
+            echo "Waiting for backend ($i/30)..."
+            sleep 2
+          done
+          
+          # Debug information
+          echo "=== Process Status ==="
+          ps aux | grep dotnet
+          
+          echo "=== Network Status ==="
           netstat -tulpn || ss -tulpn
-          echo "=== CURL to 0.0.0.0:3000 ==="
-          curl -v http://0.0.0.0:3000 || echo "Server not responding on port 3000"
+          
+          # Verify the server is running
+          if ! curl -v http://0.0.0.0:3000/api; then
+            echo "=== Backend Log ==="
+            cat backend.log || echo "No backend.log found"
+            echo "=== Last 50 lines of system log ==="
+            tail -n 50 /var/log/syslog || true
+            exit 1
 
         
       - name: Check if anything is listening on port 3000
@@ -72,4 +95,4 @@ jobs:
 
       - name: Run UI tests
         run: dotnet test SecuremeTests/SecuremeTests.csproj
- 
+

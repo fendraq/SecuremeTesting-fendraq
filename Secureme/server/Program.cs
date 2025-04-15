@@ -15,7 +15,9 @@ using server.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine("Starting server configuration...");
 builder.WebHost.UseUrls("http://0.0.0.0:3000");
+Console.WriteLine($"Server URL configured to: http://0.0.0.0:3000");
 
 // Loading environment variables from ../.env
 Env.Load("../.env");
@@ -52,6 +54,7 @@ NpgsqlConnection.GlobalTypeMapper.MapEnum<CaseStatus>();
 NpgsqlConnection.GlobalTypeMapper.MapEnum<CaseCategory>();
 
 // Initializing and testing DB connection
+Console.WriteLine($"Database connection string: Host={Environment.GetEnvironmentVariable("DB_HOST")};Port={Environment.GetEnvironmentVariable("DB_PORT")}");
 var database = new Database();
 database.TestConnection();
 
