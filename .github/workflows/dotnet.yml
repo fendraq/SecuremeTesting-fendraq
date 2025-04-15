@@ -3,9 +3,9 @@
 
 name: CI/CD Test
 
-#on:
-  #push:
-    #branches: ["main"]
+on:
+  push:
+    branches: ["main"]
   
 jobs:
   
@@ -32,33 +32,17 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
-      - name: Install dependencies
+      - name: Install dotnet projec dependencies
         run: dotnet restore SecuremeTests/SecuremeTests.csproj
 
-      - name: Install frontend dependencies
-        run: |
-          cd Secureme/client
-          npm ci
-
       - name: Build UI test project
-        run: dotnet build SecuremeTests/SecuremeTests.csproj
+        run: cd SecuremeTests/SecuremeTests.csproj && dotnet build 
 
       - name: Install Playwright Browsers
-        run: pwsh SecuremeTests/bin/Debug/net9.0/playwright.ps1 install --with-deps
+        run: cd SecuremeTests/SecuremeTests.csproj && pwsh bin/Debug/net9.0/playwright.ps1 install --with-deps
 
       - name: Start backend
-        run: nohup dotnet run --project Secureme/server &
-
-      - name: Start frontend (Vite) dev server
-        run: |
-          cd Secureme/client
-          nohup npm run dev -- --host &
-          
-      - name: Debug frontend
-        run: curl http://localhost:5173
-        
-      - name: Wait for frontend to be ready
-        run: npx wait-on http://localhost:5173
+        run: cd Secureme/server && nohup dotnet run &
 
       - name: Run UI tests
         run: dotnet test SecuremeTests/SecuremeTests.csproj
