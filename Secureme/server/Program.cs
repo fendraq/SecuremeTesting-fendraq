@@ -15,6 +15,7 @@ using server.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseUrls("http://localhost:3000");
 
 // Loading environment variables from ../.env
 Env.Load("../.env");
