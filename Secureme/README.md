@@ -1,4 +1,4 @@
-﻿# ~ seCuReMe ~
+﻿## ~ seCuReMe ~
 
 # For teammates that wants to clone your code use Git Bash:
 1. Choose a location for your file repos (cd/.../desktop)
