@@ -32,7 +32,15 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
-      - name: Install dotnet projec dependencies
+      # Build server project first
+      - name: Build server project
+        run: |
+          cd Secureme/server
+          dotnet restore
+          dotnet build --configuration Release
+
+      # Then build and restore test project
+      - name: Install dotnet project dependencies
         run: dotnet restore SecuremeTests/SecuremeTests.csproj
 
       - name: Build UI test project
