@@ -41,16 +41,19 @@ jobs:
       - name: Install Playwright Browsers
         run: cd SecuremeTests && pwsh bin/Debug/net9.0/playwright.ps1 install --with-deps
 
-      - name: Start backend
+      - name: Start .NET backend
+        working-directory: Secureme/server
         run: |
-          cd Secureme/server && nohup dotnet run --project server &> backend.log &
-          sleep 10
+          echo "Starting backend..."
+          dotnet run --project server > backend.log 2>&1 &
+          sleep 5
           echo "=== Backend log ==="
-          cat backend.log
+          cat backend.log || echo "backend.log not found"
           echo "=== Ports Listening ==="
           netstat -tulpn || ss -tulpn
           echo "=== CURL to localhost:3000 ==="
           curl -v http://localhost:3000 || echo "Server not responding on port 3000"
+
         
       - name: Check if anything is listening on port 3000
         run: |
