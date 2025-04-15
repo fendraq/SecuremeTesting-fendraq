@@ -36,10 +36,10 @@ jobs:
         run: dotnet restore SecuremeTests/SecuremeTests.csproj
 
       - name: Build UI test project
-        run: cd SecuremeTests/SecuremeTests.csproj && dotnet build 
+        run: cd SecuremeTests && dotnet build 
 
       - name: Install Playwright Browsers
-        run: cd SecuremeTests/SecuremeTests.csproj && pwsh bin/Debug/net9.0/playwright.ps1 install --with-deps
+        run: cd SecuremeTests && pwsh bin/Debug/net9.0/playwright.ps1 install --with-deps
 
       - name: Start backend
         run: cd Secureme/server && nohup dotnet run &
