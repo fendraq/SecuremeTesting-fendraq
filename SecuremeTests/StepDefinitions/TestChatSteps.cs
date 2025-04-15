@@ -36,13 +36,13 @@ public class TestChatSteps
   [Given(@"I have received a mail with a chat link")]
   public async Task GivenIHaveRecievedAMailWithAChatLink()
   {
-    await _page.GotoAsync("http://localhost:5173");
+    await _page.GotoAsync("http://localhost:3000");
   }
   
   [When(@"I click on the link with token ""(.*)""")]
   public async Task WhenIClickOnTheLinkWithToken(string p0)
   {
-    await _page.GotoAsync("http://localhost:5173/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
+    await _page.GotoAsync("http://localhost:3000/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
   }
 
   [Then(@"I am redirected to a unique chat")]
@@ -55,7 +55,7 @@ public class TestChatSteps
   [Given(@"I am on the customer chat-page")]
   public async Task GivenIAmOnTheCustomerChatPage()
   {
-    await _page.GotoAsync("http://localhost:5173/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
+    await _page.GotoAsync("http://localhost:3000/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
   }
 
   [When(@"I input a message in the textarea")]
@@ -73,7 +73,7 @@ public class TestChatSteps
   [When(@"refresh the page")]
   public async Task WhenRefreshThePage()
   {
-    await _page.GotoAsync("http://localhost:5173/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
+    await _page.GotoAsync("http://localhost:3000/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
   } 
   
   [Then(@"I will see the message with a timestamp in the chat window")]
@@ -97,7 +97,7 @@ public class TestChatSteps
   [Given(@"I am on the My Cases view")]
   public async Task GivenIAmOnTheMyCasesView()
   {
-    await _page.GotoAsync("http://localhost:5173/my-case");
+    await _page.GotoAsync("http://localhost:3000/my-case");
   }
 
   [Given(@"I see the list with my cases")]

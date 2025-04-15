@@ -37,7 +37,7 @@ public class TestNewCustomerCase
   [Given(@"I am on the Webshop page")]
   public async Task GivenIAmOnTheWebshopPage()
   {
-    await _page.GotoAsync("http://localhost:5173");
+    await _page.GotoAsync("http://localhost:3000");
   }
 
   [When(@"I click on the Add new case-icon")]

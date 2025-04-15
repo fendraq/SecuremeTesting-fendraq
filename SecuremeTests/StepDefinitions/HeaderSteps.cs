@@ -37,7 +37,7 @@ public class HeaderSteps
   [Given("the user opens the homepage")]  
   public async Task GivenTheUserOpensTheHomepage()  
   {    
-    await _page.GotoAsync("http://localhost:5173/");  
+    await _page.GotoAsync("http://localhost:3000/");  
   }    
   [ThenAttribute(@"the header should be visable")]  
   public async Task ThenTheHeaderShouldBeVisable()  

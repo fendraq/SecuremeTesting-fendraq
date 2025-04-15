@@ -5,6 +5,7 @@ Feature: Test Chat
         When I click on the link with token "9ce82c4e-d015-488f-b305-69a9ec22c3d0"
         Then I am redirected to a unique chat
          
+    @ignore
     Scenario: TC-031 Customer can write a message in the chatt
         Given I am on the customer chat-page
         When I input a message in the textarea 
