@@ -50,8 +50,8 @@ jobs:
           cat backend.log || echo "backend.log not found"
           echo "=== Ports Listening ==="
           netstat -tulpn || ss -tulpn
-          echo "=== CURL to localhost:3000 ==="
-          curl -v http://localhost:3000 || echo "Server not responding on port 3000"
+          echo "=== CURL to 0.0.0.0:3000 ==="
+          curl -v http://0.0.0.0:3000 || echo "Server not responding on port 3000"
 
         
       - name: Check if anything is listening on port 3000
@@ -61,8 +61,8 @@ jobs:
 
       - name: Try to connect to the backend server
         run: |
-          echo "Trying to curl http://localhost:3000..."
-          curl -v --retry 5 --retry-delay 2 http://localhost:3000 || echo "curl failed to reach http://localhost:3000"
+          echo "Trying to curl http://0.0.0.0:3000..."
+          curl -v --retry 5 --retry-delay 2 http://0.0.0.0:3000 || echo "curl failed to reach http://0.0.0.0:3000"
 
       - name: Display IP and port bindings
         run: |
