@@ -12,7 +12,7 @@ public static class LoginQueries
     public static void MapLoginEndpoints(this WebApplication app, Database database)
     {
         // GET /login
-        app.MapGet("/login", async (HttpContext context) =>
+        app.MapGet("/api/login", async (HttpContext context) =>
         {
             await using var connection = database.GetConnection();
             try
@@ -39,7 +39,7 @@ public static class LoginQueries
         });
 
         // POST /login
-        app.MapPost("/login", async (HttpContext context, User userRequest) =>
+        app.MapPost("/api/login", async (HttpContext context, User userRequest) =>
         {
             await using var connection = database.GetConnection();
             try
@@ -100,7 +100,7 @@ public static class LoginQueries
         });
 
         // DELETE /login
-        app.MapDelete("/login", async (HttpContext context) =>
+        app.MapDelete("/api/login", async (HttpContext context) =>
         {
             await using var connection = database.GetConnection();
             try

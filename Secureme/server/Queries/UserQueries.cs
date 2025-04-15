@@ -12,7 +12,7 @@ public static class UserQueries
     public static void MapUserEndpoints(this WebApplication app, Database database)
     {
         // Get request endpoint to fetch users
-        app.MapGet("/users", async () =>
+        app.MapGet("/api/users", async () =>
         {
             // Return a list of User objects
             var users = new List<User>();
@@ -44,7 +44,7 @@ public static class UserQueries
         });
 
         // Using same logic for Cases endpoint:
-        app.MapGet("/user-cases/{id}", async (int id) =>
+        app.MapGet("/api/user-cases/{id}", async (int id) =>
         {
             try
             {
@@ -97,7 +97,7 @@ public static class UserQueries
         });
 
         // POST /new-user
-        app.MapPost("/new-user", async (HttpContext context) =>
+        app.MapPost("/api/new-user", async (HttpContext context) =>
         {
             try
             {
@@ -139,7 +139,7 @@ public static class UserQueries
         });
 
         // DELETE /users/{id}
-        app.MapDelete("/users/{id}", async (int id) =>
+        app.MapDelete("/api/users/{id}", async (int id) =>
         {
             using var connection = database.GetConnection();
             await connection.OpenAsync();
@@ -157,7 +157,7 @@ public static class UserQueries
         });
 
         // PATCH /users/{id}
-        app.MapPatch("/users/{id}", async (int id, HttpContext patchContext) =>
+        app.MapPatch("/api/users/{id}", async (int id, HttpContext patchContext) =>
         {
             try
             {
@@ -222,7 +222,7 @@ public static class UserQueries
         });
 
         // PUT /register
-        app.MapPut("/register", async (HttpContext ctx, User userRequest) =>
+        app.MapPut("/api/register", async (HttpContext ctx, User userRequest) =>
         {
             await using var connection = database.GetConnection();
             try

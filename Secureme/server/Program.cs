@@ -60,7 +60,7 @@ app.MapCaseEndpoints(database, emailService);
 app.MapChatEndpoints(database, emailService);
 app.MapLoginEndpoints(database);
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/api", () => "Hello World!");
 
 
 app.Run();

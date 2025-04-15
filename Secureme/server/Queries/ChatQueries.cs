@@ -13,7 +13,7 @@ public static class ChatQueries
     public static void MapChatEndpoints(this WebApplication app, Database database, IEmailService emailService)
     {
         // Get data to chat: case, messages and user
-        app.MapGet("/chat/case/{chatToken}", async (Guid chatToken, HttpContext _) =>
+        app.MapGet("/api/chat/case/{chatToken}", async (Guid chatToken, HttpContext _) =>
         {
             await using var connection = database.GetConnection();
             Console.WriteLine($"Chat Token: {chatToken}");
@@ -114,7 +114,7 @@ public static class ChatQueries
         });
 
         // Insert new message from chat - (POST "/chat/new-message")
-        app.MapPost("/chat/new-message", async (HttpContext ctx) =>
+        app.MapPost("/api/chat/new-message", async (HttpContext ctx) =>
         {
             try
             {
@@ -148,7 +148,7 @@ public static class ChatQueries
         });
 
         // Update a case with status closed and timestamp"
-        app.MapPatch("/chat/close-case/{id}", async (int id, HttpContext _) =>
+        app.MapPatch("/api/chat/close-case/{id}", async (int id, HttpContext _) =>
         {
             try
             {
@@ -183,7 +183,7 @@ public static class ChatQueries
         });
 
         // GET chat data when in back office. Eventuellt ta bort user table.
-        app.MapGet("/chat/backoffice/{id}", async (int id, HttpContext _) =>
+        app.MapGet("/api/chat/backoffice/{id}", async (int id, HttpContext _) =>
         {
             await using var connection = database.GetConnection();
             Console.WriteLine($"Trying to get messages and case handler for case ID: {id}");

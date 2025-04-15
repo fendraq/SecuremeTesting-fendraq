@@ -13,7 +13,7 @@ public static class CaseQueries
     public static void MapCaseEndpoints(this WebApplication app, Database database, IEmailService emailService)
     {
         // Get Cases
-        app.MapGet("/cases", async () =>
+        app.MapGet("/api/cases", async () =>
         {
             var cases = new List<Case>();
             using var connection = database.GetConnection();
@@ -51,7 +51,7 @@ public static class CaseQueries
         });
 
         // POST "/cases"
-        app.MapPost("/cases", async (HttpContext context) =>
+        app.MapPost("/api/cases", async (HttpContext context) =>
         {
             try
             {
