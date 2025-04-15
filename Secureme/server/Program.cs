@@ -15,6 +15,7 @@ using server.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Loading environment variables from ../.env
 Env.Load("../.env");
 
@@ -41,6 +42,9 @@ builder.Services.AddSession(options =>
 // Building the WebApplication
 var app = builder.Build();
 app.UseSession();
+app.UseDefaultFiles();
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
 
 // Mapping PostgreSQL enums
 NpgsqlConnection.GlobalTypeMapper.MapEnum<CaseStatus>();
@@ -57,5 +61,6 @@ app.MapChatEndpoints(database, emailService);
 app.MapLoginEndpoints(database);
 
 app.MapGet("/", () => "Hello World!");
+
 
 app.Run();
