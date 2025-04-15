@@ -103,6 +103,6 @@ public class TestChatSteps
   [Given(@"I see the list with my cases")]
   public async Task GivenISeeTheListWithMyCases()
   {
-    await _page.GetByText()
+    
   }
 }
