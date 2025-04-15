@@ -55,9 +55,13 @@
             },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[17.12.0, )"
+              "version": "[17.8.0, )"
             },
             "Microsoft.Playwright": {
+              "target": "Package",
+              "version": "[1.51.0, )"
+            },
+            "Microsoft.Playwright.TestAdapter": {
               "target": "Package",
               "version": "[1.51.0, )"
             },
@@ -83,11 +87,15 @@
             },
             "xunit": {
               "target": "Package",
-              "version": "[2.9.3, )"
+              "version": "[2.8.0, )"
+            },
+            "xunit.extensibility.core": {
+              "target": "Package",
+              "version": "[2.8.0, )"
             },
             "xunit.runner.visualstudio": {
               "target": "Package",
-              "version": "[2.8.2, )"
+              "version": "[2.5.6, )"
             }
           },
           "imports": [

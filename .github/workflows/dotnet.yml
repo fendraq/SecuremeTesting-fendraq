@@ -23,7 +23,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.405'  # Change from 8.0.x to specific version
+          dotnet-version: '8.0.405'
 
       - name: Test DB connection
         run: |
