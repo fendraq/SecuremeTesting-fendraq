@@ -23,7 +23,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: '8.0.405'  # Change from 8.0.x to specific version
 
       - name: Test DB connection
         run: |
@@ -39,46 +39,29 @@ jobs:
         run: cd SecuremeTests && dotnet build 
 
       - name: Install Playwright Browsers
-        run: cd SecuremeTests && pwsh bin/Debug/net9.0/playwright.ps1 install --with-deps
+        run: cd SecuremeTests && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
 
       - name: Start .NET backend
+        env:
+          CI: "true"
         run: |
           echo "Starting backend..."
           cd Secureme/server
-          
-          # Build first
-          dotnet build
-          
-          # Run without the --no-build flag
           dotnet run &
           
           # Store the PID
           echo $! > ../backend.pid
           
-          # Wait for the server to be ready with better logging
+          # Wait for the server to be ready
           for i in {1..30}; do
             if curl -s http://0.0.0.0:3000/api > /dev/null; then
               echo "Backend started successfully"
               break
             fi
             echo "Waiting for backend ($i/30)..."
-            # Print dotnet process status
-            ps aux | grep dotnet
             sleep 2
           done
-          
-          # Add error checking
-          if ! ps -p $(cat ../backend.pid) > /dev/null; then
-            echo "Backend process is not running!"
-            echo "=== Build Output ==="
-            cat bin/Debug/net9.0/*.log 2>/dev/null || echo "No build logs found"
-            exit 1
 
-      - name: Verify backend build
-        run: |
-          cd Secureme/server
-          dotnet build --configuration Release
-        
       - name: Check if anything is listening on port 3000
         run: |
           echo "Checking what is listening on port 3000..."

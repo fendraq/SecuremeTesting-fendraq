@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj": {}
+    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\SecuremeTests.csproj": {}
   },
   "projects": {
-    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj": {
+    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\SecuremeTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj",
+        "projectUniqueName": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\SecuremeTests.csproj",
         "projectName": "SecuremeTests",
-        "projectPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\SecuremeTests.csproj",
+        "projectPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\SecuremeTests.csproj",
         "packagesPath": "C:\\Users\\svens\\.nuget\\packages\\",
-        "outputPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\SecuremeTests\\obj\\",
+        "outputPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\securemetests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -22,20 +22,16 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
-            "projectReferences": {
-              "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\Secureme\\server\\server.csproj": {
-                "projectPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\Secureme\\server\\server.csproj"
-              }
-            }
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -47,12 +43,11 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "FluentAssertions": {
               "target": "Package",
@@ -111,93 +106,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\Secureme\\server\\server.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\Secureme\\server\\server.csproj",
-        "projectName": "server",
-        "projectPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\Secureme\\server\\server.csproj",
-        "packagesPath": "C:\\Users\\svens\\.nuget\\packages\\",
-        "outputPath": "C:\\Local\\Peter\\Testning\\SecuremeTesting@fendraq\\Secureme\\server\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\svens\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net9.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
-      },
-      "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
-          "dependencies": {
-            "DotNetEnv": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "MailKit": {
-              "target": "Package",
-              "version": "[4.11.0, )"
-            },
-            "Npgsql": {
-              "target": "Package",
-              "version": "[9.0.2, )"
-            },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[9.0.3, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.405/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

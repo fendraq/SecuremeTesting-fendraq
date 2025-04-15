@@ -16,8 +16,13 @@ using server.Queries;
 var builder = WebApplication.CreateBuilder(args);
 
 Console.WriteLine("Starting server configuration...");
-builder.WebHost.UseUrls("http://0.0.0.0:3000");
-Console.WriteLine($"Server URL configured to: http://0.0.0.0:3000");
+
+// Determine if running in CI environment (GitHub Actions sets this to 'true')
+var isRunningInCI = Environment.GetEnvironmentVariable("CI")?.ToLower() == "true";
+var serverUrl = isRunningInCI ? "http://0.0.0.0:3000" : "http://localhost:3000";
+
+builder.WebHost.UseUrls(serverUrl);
+Console.WriteLine($"Server URL configured to: {serverUrl}");
 
 // Loading environment variables from ../.env
 Env.Load("../.env");
@@ -65,6 +70,5 @@ app.MapChatEndpoints(database, emailService);
 app.MapLoginEndpoints(database);
 
 app.MapGet("/api", () => "Hello World!");
-
 
 app.Run();
