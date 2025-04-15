@@ -45,7 +45,7 @@ jobs:
         working-directory: Secureme/server
         run: |
           echo "Starting backend..."
-          dotnet run --project ./server > backend.log 2>&1 &
+          cd Secureme/server && dotnet run --project > backend.log 2>&1 &
           sleep 5
           echo "=== Backend log ==="
           cat backend.log || echo "backend.log not found"
