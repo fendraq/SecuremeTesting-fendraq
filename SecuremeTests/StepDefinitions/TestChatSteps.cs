@@ -103,6 +103,7 @@ public class TestChatSteps
   [Given(@"I see the list with my cases")]
   public async Task GivenISeeTheListWithMyCases()
   {
-    
+    bool visible = await _page.IsVisibleAsync("name='User Cases");
+    visible.Should().BeTrue();
   }
 }
