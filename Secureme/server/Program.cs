@@ -28,12 +28,12 @@ Console.WriteLine($"Server URL configured to: {serverUrl}");
 Env.Load("../.env");
 
 // Constructing EmailSettings & EmailService
-var emailSettings = new EmailSettings(
+/* var emailSettings = new EmailSettings(
     Env.GetString("SMTP_SERVER"),
     int.Parse(Env.GetString("SMTP_PORT")),
     Env.GetString("FROM_EMAIL"),
     Env.GetString("EMAIL_PASSWORD")
-);
+); */
 
 // Instantiating the EmailService using the email settings
 var emailService = new EmailService(emailSettings);
