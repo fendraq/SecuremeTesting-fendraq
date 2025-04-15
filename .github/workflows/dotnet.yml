@@ -32,6 +32,13 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
+      # Build solution first
+      - name: Build solution
+        run: |
+          dotnet restore
+          dotnet build --configuration Release
+        working-directory: ./Secureme
+
       # Build server project first
       - name: Build server project
         run: |
@@ -52,10 +59,20 @@ jobs:
       - name: Start .NET backend
         env:
           CI: "true"
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         run: |
           echo "Starting backend..."
           cd Secureme/server
-          dotnet run &
+          
+          # Verify env vars are set
+          echo "DB_PORT is: $DB_PORT"
+          echo "DB_HOST is: $DB_HOST"
+          
+          dotnet run --configuration Release &
           
           # Store the PID
           echo $! > ../backend.pid
