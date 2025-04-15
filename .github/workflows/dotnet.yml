@@ -43,6 +43,19 @@ jobs:
 
       - name: Start backend
         run: cd Secureme/server && nohup dotnet run &
+        
+      - name: Check what is listening on port 3000
+          echo "Checking what is listening on port 3000..."
+          sudo lsof -i :3000 || echo "Nothing is listening on port 3000"
+
+      - name: Try to connect to the backend server
+          echo "Trying to curl http://localhost:3000..."
+          curl -v --retry 5 --retry-delay 2 http://localhost:3000 || echo "curl failed to reach http://localhost:3000"
+
+      - name: Display IP and port bindings
+          echo "IP and port bindings info:"
+          ip addr
+          netstat -tulpn 2>/dev/null || ss -tulpn
 
       - name: Run UI tests
         run: dotnet test SecuremeTests/SecuremeTests.csproj
