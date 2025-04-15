@@ -23,7 +23,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.405'
+          dotnet-version: '8.0.x'
 
       - name: Test DB connection
         run: |
@@ -32,76 +32,18 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
-      # Build solution first
-      - name: Build solution
-        run: |
-          dotnet restore
-          dotnet build --configuration Release
-        working-directory: ./Secureme
-
       # Build server project first
       - name: Build server project
-        run: |
-          cd Secureme/server
-          dotnet restore
-          dotnet build --configuration Release
-
-      # Then build and restore test project
-      - name: Install dotnet project dependencies
-        run: dotnet restore SecuremeTests/SecuremeTests.csproj
+        run: dotnet restore
 
       - name: Build UI test project
-        run: cd SecuremeTests && dotnet build 
+        run: dotnet build securemetests.csproj
 
       - name: Install Playwright Browsers
-        run: cd SecuremeTests && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+        run: cd SecuremeTests.csproj && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
 
-      - name: Start .NET backend
-        env:
-          CI: "true"
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-        run: |
-          echo "Starting backend..."
-          cd Secureme/server
-          
-          # Verify env vars are set
-          echo "DB_PORT is: $DB_PORT"
-          echo "DB_HOST is: $DB_HOST"
-          
-          dotnet run --configuration Release &
-          
-          # Store the PID
-          echo $! > ../backend.pid
-          
-          # Wait for the server to be ready
-          for i in {1..30}; do
-            if curl -s http://0.0.0.0:3000/api > /dev/null; then
-              echo "Backend started successfully"
-              break
-            fi
-            echo "Waiting for backend ($i/30)..."
-            sleep 2
-          done
-
-      - name: Check if anything is listening on port 3000
-        run: |
-          echo "Checking what is listening on port 3000..."
-          sudo lsof -i :3000 || echo "Nothing is listening on port 3000"
-
-      - name: Try to connect to the backend server
-        run: |
-          echo "Trying to curl http://0.0.0.0:3000..."
-          curl -v --retry 5 --retry-delay 2 http://0.0.0.0:3000 || echo "curl failed to reach http://0.0.0.0:3000"
-
-      - name: Display IP and port bindings
-        run: |
-          echo "IP and port bindings info:"
-          ip addr
-          netstat -tulpn 2>/dev/null || ss -tulpn
+      - name: Start server
+        run: cd Secureme/server && nohup dotnet run &
 
       - name: Run UI tests
         run: dotnet test SecuremeTests/SecuremeTests.csproj
