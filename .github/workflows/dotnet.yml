@@ -6,17 +6,17 @@ name: CI/CD Test
 on:
   push:
     branches: ["main"]
-
-env:
-  DB_HOST: ${{ secrets.DB_HOST }}
-  DB_PORT: ${{ secrets.DB_PORT }}
-  DB_USER: ${{ secrets.DB_USER }}
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_NAME: ${{ secrets.DB_NAME }}
   
 jobs:
+  
   gui_tests:
     runs-on: ubuntu-latest
+    env:
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
     steps:
       - uses: actions/checkout@v4
 
@@ -24,6 +24,13 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
+
+      - name: Test DB connection
+        run: |
+          echo "Checking DB connection..."
+          pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER
+        env:
+          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Install dependencies
         run: dotnet restore SecuremeTests/SecuremeTests.csproj
