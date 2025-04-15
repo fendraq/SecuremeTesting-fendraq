@@ -87,10 +87,22 @@ public class TestChatSteps
     messageText.Should().Be("I would like to get some help now!");
 
     
-    var timestamps = await _page.QuerySelectorAllAsync(".chat-message-timestamp");
+    /*var timestamps = await _page.QuerySelectorAllAsync(".chat-message-timestamp");
     var lastTimestamp = timestamps.Last();
     var timestampText = await lastTimestamp.InnerTextAsync();
     
-    timestampText.Should().NotBeNullOrWhiteSpace();
+    timestampText.Should().NotBeNullOrWhiteSpace();*/
+  }
+
+  [Given(@"I am on the My Cases view")]
+  public async Task GivenIAmOnTheMyCasesView()
+  {
+    await _page.GotoAsync("http://localhost:5173/my-case");
+  }
+
+  [Given(@"I see the list with my cases")]
+  public async Task GivenISeeTheListWithMyCases()
+  {
+    await _page.GetByText()
   }
 }

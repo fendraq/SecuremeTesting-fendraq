@@ -13,7 +13,7 @@ const MyCase = () => {
     useEffect(() => {    
         const fetchAllCases = () => {
           
-          fetch("/api/user-cases/7", {
+          fetch("/api/user-cases/8", {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           })

@@ -19,7 +19,7 @@ Feature: Test Chat
     Scenario: TC-032 Customer support can view the same chat
         Given I am on the My Cases view
         And I see the list with my cases
-        When I click on the case with id "40"
+        When I click on the case with id "19"
         Then I will se the same chat as the customer "Peter" sent
 
     @ignore
