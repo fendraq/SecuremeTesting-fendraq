@@ -33,11 +33,11 @@ jobs:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
       # Build server project first
-      - name: Build server project
+      - name: Restore projects
         run: dotnet restore
 
-      - name: Build UI test project
-        run: dotnet build securemetests.csproj
+      - name: Build projects
+        run: dotnet build
 
       - name: Install Playwright Browsers
         run: cd SecuremeTests.csproj && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
@@ -46,5 +46,5 @@ jobs:
         run: cd Secureme/server && nohup dotnet run &
 
       - name: Run UI tests
-        run: dotnet test SecuremeTests/SecuremeTests.csproj
+        run: cd securemetests && dotnet test 
 
