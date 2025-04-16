@@ -22,13 +22,16 @@ Feature: Test Chat
         When I click on the case with title "Customer support was amazing, really helpful"
         Then I will se the same chat as the customer "Peter" with the message "I would like to get some help now!" sent
 
-    @ignore
+    
     Scenario: TC-033 Customer and customer support can send messages to each other
         Given the customer have a open chat
         And the customer service have a open chat
         When the customer sends a message
+        """
+        I have a problem!
+        """
         And the customer support refreshes the page
-        And the customer support see a message from the customer
+        And the customer support see a chat with the title "Customer support was amazing, really helpful" message "I have a problem!" from the customer "Peter"
         And sends a reply message
         Then the customer will see the new message
     @ignore

@@ -10,6 +10,7 @@ namespace SecuremeTests.StepDefinitions;
 public class TestChatSteps
 {
   private IPage _page;
+  private IPage _page2;
   private IBrowser _browser;
   private IBrowserContext _context;
 
@@ -24,6 +25,7 @@ public class TestChatSteps
     });
     _context = await _browser.NewContextAsync();
     _page = await _context.NewPageAsync();
+    _page2 = await _context.NewPageAsync();
   }
 
   [AfterScenario]
@@ -50,6 +52,7 @@ public class TestChatSteps
   {
     var headingText = await _page.InnerTextAsync("h1");
     headingText.Should().Be("Chat");
+    //Assert
   }
 
   [Given(@"I am on the customer chat-page")]
@@ -151,5 +154,105 @@ public class TestChatSteps
     timestampText.Should().NotBeNullOrWhiteSpace();
     
     
+  }
+
+  [Given(@"the customer have a open chat")]
+  public async Task GivenTheCustomerHaveAOpenChat()
+  {
+    await _page.GotoAsync("http://localhost:3000/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
+    var headingText = await _page.InnerTextAsync("h1");
+    headingText.Should().Be("Chat");
+    var chatTitle = await _page.InnerTextAsync("h3:has-text('Customer support was amazing, really helpful')");
+    chatTitle.Should().Be("Customer support was amazing, really helpful");
+  }
+
+  [Given(@"the customer service have a open chat")]
+  [When(@"the customer support refreshes the page")]
+  public async Task GivenTheCustomerServiceHaveAOpenChat()
+  {
+    await _page2.GotoAsync("http://localhost:3000/my-case");
+    
+    await _page2.GetByText("Customer support was amazing, really helpful").ClickAsync();
+    // Vänta på elementet
+    await _page2.WaitForSelectorAsync("h3:has-text('Customer support was amazing, really helpful')", new PageWaitForSelectorOptions { Timeout = 5000 });
+
+    // Välj element
+    var uniqueCasesHeading = await _page.QuerySelectorAsync("h3:has-text('Customer support was amazing, really helpful')");
+
+    // kolla så att elementet finns
+    uniqueCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
+
+    // plocka ut rubriken
+    var myCasesHeadingText = await uniqueCasesHeading.InnerTextAsync();
+
+    // Assert
+    myCasesHeadingText.Should().Be("Customer support was amazing, really helpful");
+    Console.WriteLine($"Chat Title: {myCasesHeadingText}");
+  }
+
+  [When(@"the customer sends a message")]
+  public async Task WhenTheCustomerSendsAMessage(string multilineText)
+  {
+    await _page.FillAsync("textarea", multilineText);
+    await _page.GetByRole(AriaRole.Button, new() { Name = "Send Message..." }).ClickAsync();
+  }
+
+
+  [When(@"the customer support see a chat with the title ""(.*)"" message ""(.*)"" from the customer ""(.*)""")]
+  public async Task WhenTheCustomerSupportSeeAChatWithTheTitleMessageFromTheCustomer(string p0, string p1, string peter)
+  {
+    await _page2.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page2.WaitForSelectorAsync("h3:has-text('Customer support was amazing, really helpful')", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page2.WaitForSelectorAsync("h4:has-text('Peter')", new PageWaitForSelectorOptions { Timeout = 5000 });
+
+    //kolla meddelande
+    var messages = await _page2.QuerySelectorAllAsync(".chat-message");
+    var lastMessage = messages.Last();
+    var messageText = await lastMessage.InnerTextAsync();
+
+    messageText.Should().Be(p1);
+    
+    //kolla chatt
+    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Customer support was amazing, really helpful')");
+    uniqueCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
+    var myCasesHeadingText = await uniqueCasesHeading.InnerTextAsync();
+    myCasesHeadingText.Should().Be(p0);
+    
+    //kolla kundnamn
+    var customerHeaders = await _page2.QuerySelectorAllAsync("h4:has-text('Peter')");
+    customerHeaders.Should().NotBeNull("Expected an <h4> within <main>.");
+    var customerHeader = customerHeaders.First();
+    var customerName = await customerHeader.InnerTextAsync();
+    customerName.Should().Contain(peter);
+  }
+
+  [When(@"sends a reply message")]
+  public async Task WhenSendsAReplyMessage()
+  {
+    await _page2.FillAsync("textarea", "Vad är ditt problem?");
+    await _page2.GetByRole(AriaRole.Button, new() { Name = "Send Message..." }).ClickAsync();
+  }
+
+  [Then(@"the customer will see the new message")]
+  public async Task ThenTheCustomerWillSeeTheNewMessage()
+  {
+    //Vänta in DOM
+    await _page.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page.WaitForSelectorAsync(".chat-message-timestamp", new PageWaitForSelectorOptions { Timeout = 5000 });
+    
+    //Spara data
+    var messages = await _page.QuerySelectorAllAsync(".chat-message");
+    messages.Should().NotBeEmpty("Expected at least one chat message to be displayed.");
+    var lastMessage = messages.Last();
+    var messageText = await lastMessage.InnerTextAsync();
+    
+    var timestamps = await _page.QuerySelectorAllAsync(".chat-message-timestamp");
+    timestamps.Should().NotBeEmpty("Expected at least one timestamp to be displayed.");
+    var lastTimestamp = timestamps.Last();
+    var timestampText = await lastTimestamp.InnerTextAsync();
+    
+    //Assert
+    messageText.Should().Be("I have a problem!");
+    timestampText.Should().NotBeNullOrWhiteSpace();
   }
 }
