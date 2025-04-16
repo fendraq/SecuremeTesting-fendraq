@@ -34,7 +34,7 @@ Feature: Test Chat
         And the customer support see a chat with the title "Customer support was amazing, really helpful" message "I have a problem!" from the customer "Peter"
         And sends a reply message
         Then the customer will see the new message
-    @ignore
+   
     Scenario: TC-034 Customer support can close the case and the chat
         Given the customer support is on the same chat
         When the customer support clicks on close case

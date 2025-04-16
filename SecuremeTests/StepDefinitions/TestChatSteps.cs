@@ -167,7 +167,6 @@ public class TestChatSteps
   }
 
   [Given(@"the customer service have a open chat")]
-  [When(@"the customer support refreshes the page")]
   [Given(@"the customer support is on the same chat")]
   public async Task GivenTheCustomerServiceHaveAOpenChat()
   {
@@ -198,6 +197,28 @@ public class TestChatSteps
     await _page.GetByRole(AriaRole.Button, new() { Name = "Send Message..." }).ClickAsync();
   }
 
+  [When(@"the customer support refreshes the page")]
+  public async Task WhenTheCustomerSupportRefreshesThePage()
+  {
+    await _page2.GotoAsync("http://localhost:3000/my-case");
+    
+    await _page2.GetByText("Customer support was amazing, really helpful").ClickAsync();
+    // Vänta på elementet
+    await _page2.WaitForSelectorAsync("h3:has-text('Customer support was amazing, really helpful')", new PageWaitForSelectorOptions { Timeout = 5000 });
+
+    // Välj element
+    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Customer support was amazing, really helpful')");
+
+    // kolla så att elementet finns
+    uniqueCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
+
+    // plocka ut rubriken
+    var myCasesHeadingText = await uniqueCasesHeading.InnerTextAsync();
+
+    // Assert
+    myCasesHeadingText.Should().Be("Customer support was amazing, really helpful");
+    Console.WriteLine($"Chat Title: {myCasesHeadingText}");
+  }
 
   [When(@"the customer support see a chat with the title ""(.*)"" message ""(.*)"" from the customer ""(.*)""")]
   public async Task WhenTheCustomerSupportSeeAChatWithTheTitleMessageFromTheCustomer(string p0, string p1, string peter)
@@ -237,6 +258,7 @@ public class TestChatSteps
   [Then(@"the customer will see the new message")]
   public async Task ThenTheCustomerWillSeeTheNewMessage()
   {
+    await _page.GotoAsync("http://localhost:3000/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
     //Vänta in DOM
     await _page.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 5000 });
     await _page.WaitForSelectorAsync(".chat-message-timestamp", new PageWaitForSelectorOptions { Timeout = 5000 });
@@ -260,6 +282,24 @@ public class TestChatSteps
   [When(@"the customer support clicks on close case")]
   public async Task WhenTheCustomerSupportClicksOnCloseCase()
   {
+    await _page2.GetByRole(AriaRole.Button, new() { Name = "Close Case" }).ClickAsync();
+  }
+  
+  [Then(@"the case will change status in the My Cases list")]
+  public async Task ThenTheCaseWillChangeStatusInTheMyCasesList()
+  {
+    await _page2.GotoAsync("http://localhost:3000/my-case");
+
+    var title = "Customer support was amazing, really helpful";
+    var rowSelector = $"tr:has(td:has-text(\"{title}\"))";
+    var rowElement = _page2.Locator(rowSelector);
     
+    rowElement.Should().NotBeNull($"Expected a row with the title \"{title}\".");
+    
+    var statusSelector = "td:nth-of-type(2)"; // Assuming status is the second column
+    var statusText = await rowElement.Locator(statusSelector).InnerTextAsync();
+
+    statusText.Should().Be("Closed", $"The case with title \"{title}\" should have status Closed");
+  
   }
 }
