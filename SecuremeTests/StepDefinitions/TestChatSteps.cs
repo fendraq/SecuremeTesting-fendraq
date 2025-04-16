@@ -168,6 +168,7 @@ public class TestChatSteps
 
   [Given(@"the customer service have a open chat")]
   [When(@"the customer support refreshes the page")]
+  [Given(@"the customer support is on the same chat")]
   public async Task GivenTheCustomerServiceHaveAOpenChat()
   {
     await _page2.GotoAsync("http://localhost:3000/my-case");
@@ -177,7 +178,7 @@ public class TestChatSteps
     await _page2.WaitForSelectorAsync("h3:has-text('Customer support was amazing, really helpful')", new PageWaitForSelectorOptions { Timeout = 5000 });
 
     // Välj element
-    var uniqueCasesHeading = await _page.QuerySelectorAsync("h3:has-text('Customer support was amazing, really helpful')");
+    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Customer support was amazing, really helpful')");
 
     // kolla så att elementet finns
     uniqueCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
@@ -229,7 +230,7 @@ public class TestChatSteps
   [When(@"sends a reply message")]
   public async Task WhenSendsAReplyMessage()
   {
-    await _page2.FillAsync("textarea", "Vad är ditt problem?");
+    await _page2.FillAsync("textarea", "What is the problem");
     await _page2.GetByRole(AriaRole.Button, new() { Name = "Send Message..." }).ClickAsync();
   }
 
@@ -252,7 +253,13 @@ public class TestChatSteps
     var timestampText = await lastTimestamp.InnerTextAsync();
     
     //Assert
-    messageText.Should().Be("I have a problem!");
+    messageText.Should().Be("What is the problem");
     timestampText.Should().NotBeNullOrWhiteSpace();
+  }
+
+  [When(@"the customer support clicks on close case")]
+  public async Task WhenTheCustomerSupportClicksOnCloseCase()
+  {
+    
   }
 }
