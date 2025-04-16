@@ -467,7 +467,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"User_name\": \"TestUser2\",\r\n    \"Password\": \"lösenord\"\r\n}",
+							"raw": "{\r\n    \"User_name\": \"TestUser\",\r\n    \"Password\": \"lösenord\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
