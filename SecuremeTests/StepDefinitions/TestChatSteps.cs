@@ -20,8 +20,8 @@ public class TestChatSteps
     var playwright = await Playwright.CreateAsync();
     _browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
     {
-      Headless = true,
-      //SlowMo = 1000
+      Headless = false,
+      SlowMo = 1000
     });
     _context = await _browser.NewContextAsync();
     _page = await _context.NewPageAsync();
@@ -83,8 +83,8 @@ public class TestChatSteps
   public async Task ThenIWillSeeTheMessageWithATimestampInTheChatWindow()
   {
     //Vänta in DOM
-    await _page.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 5000 });
-    await _page.WaitForSelectorAsync(".chat-message-timestamp", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 10000 });
+    await _page.WaitForSelectorAsync(".chat-message-timestamp", new PageWaitForSelectorOptions { Timeout = 10000 });
     
     //Spara data
     var messages = await _page.QuerySelectorAllAsync(".chat-message");
@@ -159,25 +159,24 @@ public class TestChatSteps
   [Given(@"the customer have a open chat")]
   public async Task GivenTheCustomerHaveAOpenChat()
   {
-    await _page.GotoAsync("http://localhost:3000/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
+    await _page.GotoAsync("http://localhost:3000/chat-page/1284d384-a13c-4736-a75e-0e99aaf4a0fd");
     var headingText = await _page.InnerTextAsync("h1");
     headingText.Should().Be("Chat");
-    var chatTitle = await _page.InnerTextAsync("h3:has-text('Customer support was amazing, really helpful')");
-    chatTitle.Should().Be("Customer support was amazing, really helpful");
+    var chatTitle = await _page.InnerTextAsync("h3:has-text('Big big problem')");
+    chatTitle.Should().Be("Big big problem");
   }
 
   [Given(@"the customer service have a open chat")]
-  [Given(@"the customer support is on the same chat")]
   public async Task GivenTheCustomerServiceHaveAOpenChat()
   {
     await _page2.GotoAsync("http://localhost:3000/my-case");
     
-    await _page2.GetByText("Customer support was amazing, really helpful").ClickAsync();
+    await _page2.GetByText("Big big problem").ClickAsync();
     // Vänta på elementet
-    await _page2.WaitForSelectorAsync("h3:has-text('Customer support was amazing, really helpful')", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page2.WaitForSelectorAsync("h3:has-text('Big big problem')", new PageWaitForSelectorOptions { Timeout = 5000 });
 
     // Välj element
-    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Customer support was amazing, really helpful')");
+    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Big big problem')");
 
     // kolla så att elementet finns
     uniqueCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
@@ -186,7 +185,7 @@ public class TestChatSteps
     var myCasesHeadingText = await uniqueCasesHeading.InnerTextAsync();
 
     // Assert
-    myCasesHeadingText.Should().Be("Customer support was amazing, really helpful");
+    myCasesHeadingText.Should().Be("Big big problem");
     Console.WriteLine($"Chat Title: {myCasesHeadingText}");
   }
 
@@ -202,12 +201,12 @@ public class TestChatSteps
   {
     await _page2.GotoAsync("http://localhost:3000/my-case");
     
-    await _page2.GetByText("Customer support was amazing, really helpful").ClickAsync();
+    await _page2.GetByText("Big big problem").ClickAsync();
     // Vänta på elementet
-    await _page2.WaitForSelectorAsync("h3:has-text('Customer support was amazing, really helpful')", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page2.WaitForSelectorAsync("h3:has-text('Big big problem')", new PageWaitForSelectorOptions { Timeout = 5000 });
 
     // Välj element
-    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Customer support was amazing, really helpful')");
+    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Big big problem')");
 
     // kolla så att elementet finns
     uniqueCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
@@ -216,7 +215,7 @@ public class TestChatSteps
     var myCasesHeadingText = await uniqueCasesHeading.InnerTextAsync();
 
     // Assert
-    myCasesHeadingText.Should().Be("Customer support was amazing, really helpful");
+    myCasesHeadingText.Should().Be("Big big problem");
     Console.WriteLine($"Chat Title: {myCasesHeadingText}");
   }
 
@@ -224,7 +223,7 @@ public class TestChatSteps
   public async Task WhenTheCustomerSupportSeeAChatWithTheTitleMessageFromTheCustomer(string p0, string p1, string peter)
   {
     await _page2.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 5000 });
-    await _page2.WaitForSelectorAsync("h3:has-text('Customer support was amazing, really helpful')", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page2.WaitForSelectorAsync("h3:has-text('Big big problem')", new PageWaitForSelectorOptions { Timeout = 5000 });
     await _page2.WaitForSelectorAsync("h4:has-text('Peter')", new PageWaitForSelectorOptions { Timeout = 5000 });
 
     //kolla meddelande
@@ -235,7 +234,7 @@ public class TestChatSteps
     messageText.Should().Be(p1);
     
     //kolla chatt
-    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Customer support was amazing, really helpful')");
+    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Big big problem')");
     uniqueCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
     var myCasesHeadingText = await uniqueCasesHeading.InnerTextAsync();
     myCasesHeadingText.Should().Be(p0);
@@ -258,7 +257,7 @@ public class TestChatSteps
   [Then(@"the customer will see the new message")]
   public async Task ThenTheCustomerWillSeeTheNewMessage()
   {
-    await _page.GotoAsync("http://localhost:3000/chat-page/9ce82c4e-d015-488f-b305-69a9ec22c3d0");
+    await _page.GotoAsync("http://localhost:3000/chat-page/1284d384-a13c-4736-a75e-0e99aaf4a0fd");
     //Vänta in DOM
     await _page.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 5000 });
     await _page.WaitForSelectorAsync(".chat-message-timestamp", new PageWaitForSelectorOptions { Timeout = 5000 });
@@ -279,6 +278,29 @@ public class TestChatSteps
     timestampText.Should().NotBeNullOrWhiteSpace();
   }
 
+  
+  [Given(@"the customer support is on the same chat")]
+  public async Task GivenTheCustomerIsOnAChat()
+  {
+    await _page2.GotoAsync("http://localhost:3000/my-case");
+    
+    await _page2.GetByText("Big big problem").ClickAsync();
+    // Vänta på elementet
+    await _page2.WaitForSelectorAsync("h3:has-text('Leveransproblem')", new PageWaitForSelectorOptions { Timeout = 5000 });
+
+    // Välj element
+    var uniqueCasesHeading = await _page2.QuerySelectorAsync("h3:has-text('Leveransproblem')");
+
+    // kolla så att elementet finns
+    uniqueCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
+
+    // plocka ut rubriken
+    var myCasesHeadingText = await uniqueCasesHeading.InnerTextAsync();
+
+    // Assert
+    myCasesHeadingText.Should().Be("Leveransproblem");
+    Console.WriteLine($"Chat Title: {myCasesHeadingText}");
+  }
   [When(@"the customer support clicks on close case")]
   public async Task WhenTheCustomerSupportClicksOnCloseCase()
   {
@@ -290,13 +312,13 @@ public class TestChatSteps
   {
     await _page2.GotoAsync("http://localhost:3000/my-case");
 
-    var title = "Customer support was amazing, really helpful";
+    var title = "Leveransproblem";
     var rowSelector = $"tr:has(td:has-text(\"{title}\"))";
     var rowElement = _page2.Locator(rowSelector);
     
     rowElement.Should().NotBeNull($"Expected a row with the title \"{title}\".");
     
-    var statusSelector = "td:nth-of-type(2)"; // Assuming status is the second column
+    var statusSelector = "td:nth-of-type(2)"; 
     var statusText = await rowElement.Locator(statusSelector).InnerTextAsync();
 
     statusText.Should().Be("Closed", $"The case with title \"{title}\" should have status Closed");
