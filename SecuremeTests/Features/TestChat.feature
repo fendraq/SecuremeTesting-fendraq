@@ -5,7 +5,7 @@ Feature: Test Chat
         When I click on the link with token "9ce82c4e-d015-488f-b305-69a9ec22c3d0"
         Then I am redirected to a unique chat
          
-    @ignore
+    
     Scenario: TC-031 Customer can write a message in the chatt
         Given I am on the customer chat-page
         When I input a message in the textarea 
@@ -16,12 +16,11 @@ Feature: Test Chat
         And refresh the page
         Then I will see the message with a timestamp in the chat window
 
-    @ignore
     Scenario: TC-032 Customer support can view the same chat
         Given I am on the My Cases view
         And I see the list with my cases
-        When I click on the case with id "19"
-        Then I will se the same chat as the customer "Peter" sent
+        When I click on the case with title "Customer support was amazing, really helpful"
+        Then I will se the same chat as the customer "Peter" with the message "I would like to get some help now!" sent
 
     @ignore
     Scenario: TC-033 Customer and customer support can send messages to each other

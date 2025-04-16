@@ -79,19 +79,24 @@ public class TestChatSteps
   [Then(@"I will see the message with a timestamp in the chat window")]
   public async Task ThenIWillSeeTheMessageWithATimestampInTheChatWindow()
   {
+    //Vänta in DOM
+    await _page.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page.WaitForSelectorAsync(".chat-message-timestamp", new PageWaitForSelectorOptions { Timeout = 5000 });
     
+    //Spara data
     var messages = await _page.QuerySelectorAllAsync(".chat-message");
+    messages.Should().NotBeEmpty("Expected at least one chat message to be displayed.");
     var lastMessage = messages.Last();
     var messageText = await lastMessage.InnerTextAsync();
-
-    messageText.Should().Be("I would like to get some help now!");
-
     
-    /*var timestamps = await _page.QuerySelectorAllAsync(".chat-message-timestamp");
+    var timestamps = await _page.QuerySelectorAllAsync(".chat-message-timestamp");
+    timestamps.Should().NotBeEmpty("Expected at least one timestamp to be displayed.");
     var lastTimestamp = timestamps.Last();
     var timestampText = await lastTimestamp.InnerTextAsync();
     
-    timestampText.Should().NotBeNullOrWhiteSpace();*/
+    //Assert
+    messageText.Should().Be("I would like to get some help now!");
+    timestampText.Should().NotBeNullOrWhiteSpace();
   }
 
   [Given(@"I am on the My Cases view")]
@@ -103,7 +108,48 @@ public class TestChatSteps
   [Given(@"I see the list with my cases")]
   public async Task GivenISeeTheListWithMyCases()
   {
-    bool visible = await _page.IsVisibleAsync("name='User Cases");
-    visible.Should().BeTrue();
+    // Vänta på elementet
+    await _page.WaitForSelectorAsync("main > h3", new PageWaitForSelectorOptions { Timeout = 5000 });
+
+    // Välj element
+    var myCasesHeading = await _page.QuerySelectorAsync("main > h3");
+
+    // kolla så att elementet finns
+    myCasesHeading.Should().NotBeNull("Expected an <h3> element inside <main>.");
+
+    // plocka ut rubriken
+    var myCasesHeadingText = await myCasesHeading.InnerTextAsync();
+
+    // Assert
+    myCasesHeadingText.Should().Be("My Case");
+    Console.WriteLine($"Main heading text: {myCasesHeadingText}");
+  }
+  
+  [When(@"I click on the case with title ""(.*)""")]
+  public async Task WhenIClickOnTheCaseWithTitle(string p0)
+  {
+    await _page.GetByText(p0).ClickAsync();
+  }
+
+  [Then(@"I will se the same chat as the customer ""(.*)"" with the message ""(.*)"" sent")]
+  public async Task ThenIWillSeTheSameChatAsTheCustomerWithTheMessageSent(string peter, string p1)
+  {
+    //Vänta in DOM
+    await _page.WaitForSelectorAsync(".chat-message", new PageWaitForSelectorOptions { Timeout = 5000 });
+    await _page.WaitForSelectorAsync(".chat-message-timestamp", new PageWaitForSelectorOptions { Timeout = 5000 });
+
+    var messages = await _page.QuerySelectorAllAsync(".chat-message");
+    var lastMessage = messages.Last();
+    var messageText = await lastMessage.InnerTextAsync();
+
+    messageText.Should().Be("I would like to get some help now!");
+    
+    var timestamps = await _page.QuerySelectorAllAsync(".chat-message-timestamp");
+    var lastTimestamp = timestamps.Last();
+    var timestampText = await lastTimestamp.InnerTextAsync();
+    
+    timestampText.Should().NotBeNullOrWhiteSpace();
+    
+    
   }
 }
