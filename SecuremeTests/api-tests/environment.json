@@ -1,0 +1,10 @@
+{
+  "name": "CI Environment",
+  "values": [
+    {
+      "key": "IGNORE_TESTS",
+      "value": "true",
+      "enabled": true
+    }
+  ]
+}

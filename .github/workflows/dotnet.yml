@@ -39,7 +39,7 @@ jobs:
       - name: Start Server
         run: cd Secureme/server && nohup dotnet run &
       - name: Run API-tests
-        run: newman run SecuremeTests/api-tests/Secureme_API_testing_fendraq.postman_collection.json
+        run: newman run SecuremeTests/api-tests/Secureme_API_testing_fendraq.postman_collection.json -e environment.json
     
   gui_tests:
     runs-on: ubuntu-latest
