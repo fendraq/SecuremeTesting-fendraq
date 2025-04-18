@@ -98,6 +98,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: | 
-            cd /srv/www/malmo/peter 
-            git clone https://github.com/fendraq/SecuremeTesting-fendraq.git
+            cd /srv/www/malmo/peter/SecuremeTesting-fendraq
+            git pull
 
