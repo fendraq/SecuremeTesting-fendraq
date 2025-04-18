@@ -85,3 +85,19 @@ jobs:
       - name: Run UI tests
         run: cd SecuremeTests && dotnet test 
 
+  deploy:
+    name: Deploy to Server
+    runs-on: ubuntu-latest
+    needs: [api_tests, gui_tests]
+    steps:
+      - name: Deploy App
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: | 
+            cd /srv/www/malmo/peter 
+            git clone https://github.com/fendraq/SecuremeTesting-fendraq.git
+
